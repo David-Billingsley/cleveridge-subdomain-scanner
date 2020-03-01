@@ -20,30 +20,17 @@ version = "V0.03"
 build = "003"
 #############################################################
 
-
-import collections
 import re
 import time
-import optparse
 import os
-import signal
 import ssl
-import sys
 import random
 import dns.resolver
 from datetime import datetime
 from threading import Thread
-from urllib import urlopen
-
-try:
-    import urllib.request as urllib2
-except ImportError:
-    import urllib2
-# support for python 2.7 and 3
-try:
-    import queue
-except:
-    import Queue as queue
+from urllib.request import urlopen
+import stat
+import queue
 
 
 # exit handler for signals.  So ctrl+c will work,  even with py threads.
@@ -385,11 +372,11 @@ if __name__ == "__main__":
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
         try:
-            visible_ip = urllib2.urlopen('https://cleveridge.org/_exchange/open_files/return_ip.php?s=subd_scanner',
+            visible_ip = urlopen('https://cleveridge.org/_exchange/open_files/return_ip.php?s=subd_scanner',
                                          context=ctx).read()
         except Exception:
-            visible_ip = urllib2.urlopen('https://enabledns.com/ip', context=ctx).read()
-        txt = "Visible IP : " + visible_ip
+            visible_ip = urlopen('https://enabledns.com/ip', context=ctx).read()
+        txt = "Visible IP : " + str(visible_ip)
         func_writelog("a", logloc, txt + "\n\n")
         print(txt)
         print(' ')
